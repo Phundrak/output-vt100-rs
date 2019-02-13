@@ -1,0 +1,9 @@
+[package]
+name = "output-vt100"
+version = "0.1.0"
+authors = ["Phuntsok Drak-pa <phundrak@phundrak.fr>"]
+edition = "2018"
+
+[dependencies]
+ctor = "0.1.7"
+winapi = { version = "0.3.6", features = ["winuser", "winbase", "consoleapi", "processenv"] }
