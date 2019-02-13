@@ -7,9 +7,8 @@ description = "Utility to activate escape codes in Windows' CMD and PowerShell"
 repository = "https://github.com/Phundrak/output-vt100-rs"
 keywords = ["vt100", "console", "ansi"]
 readme = "README.md"
-licence = "GPL-3.0"
+license = "GPL-3.0"
 categories = ["development-tools"]
 
 [dependencies]
-ctor = "0.1.7"
 winapi = { version = "0.3.6", features = ["winuser", "winbase", "consoleapi", "processenv"] }
