@@ -11,6 +11,7 @@ pub fn init() {
     let mut state: DWORD = 0;
     assert_ne!(unsafe { GetConsoleMode(console_out, &mut state) }, 0);
     state |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    state &= !DISABLE_NEWLINE_AUTO_RETURN;
     assert_ne!(unsafe { SetConsoleMode(console_out, state) }, 0);
 }
 #[cfg(not(windows))]
