@@ -13,7 +13,7 @@ fn main() {
 
 If you wish to ensure the `output_vt100::init()` function is only ran once, you can use the crate [ctor](https://crates.io/crates/ctor). Be aware though it might not be suited for every use case, as explained on the crate’s presentation.
 
-```
+```rust
 extern crate output_vt100;
 extern crate ctor;
 use ctor::*;
