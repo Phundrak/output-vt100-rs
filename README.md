@@ -1,3 +1,9 @@
+[![crates.io](https://img.shields.io/crates/v/output_vt100.svg?style=flat)](https://crates.io/crates/output_vt100)
+[![GPL-3.0 Licensed](https://img.shields.io/crates/l/output_vt100.svg?style=flat)](https://crates.io/crates/output_vt100)
+[![Downloads](https://img.shields.io/crates/d/output_vt100.svg?style=flat)](https://crates.io/crates/output_vt100)
+[![Released API docs](https://docs.rs/output_vt100/badge.svg)](https://docs.rs/output_vt100)
+[![AppVeyor CI](https://img.shields.io/appveyor/ci/Phundrak/output-vt100-rs.svg?style=flat)](https://ci.appveyor.com/project/Phundrak/output-vt100-rs)
+
 # Output-VT100
 
 This simple crates allows developers to enable ANSI escape characters in Windows' console, be it CMD or PowerShell. Its usage is very simple, as shown below:
