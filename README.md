@@ -35,6 +35,9 @@ fn main() {
 }
 ```
 
+Not  that init  panics on  error, if  you do  not wish  to panic,  use
+`output_vt100::try_init` which returns a `Result<(), ()>`
+
 # Acknowledgements
 
 A big thank you to [nbouteme](https://github.com/nbouteme) who helped me a lot during the development of this create.
