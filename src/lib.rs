@@ -35,7 +35,6 @@ pub fn try_init() -> Result<(), ()> {
     let mut state: DWORD = 0;
     let mut ret: Result<(), _> = Ok(());
     unsafe {
-        let mut e: DWORD = 0;
         if GetConsoleMode(console_out, &mut state) == 0 {
             ret = Err(());
         }
