@@ -23,7 +23,7 @@
 //! you can leave this line in your Unix builds too, it will simply do nothing.
 
 #[cfg(windows)]
-pub fn init() {
+pub fn try_init() -> Result<(), ()> {
     use winapi::shared::minwindef::DWORD;
     use winapi::um::consoleapi::{GetConsoleMode, SetConsoleMode};
     use winapi::um::processenv::GetStdHandle;
@@ -33,11 +33,33 @@ pub fn init() {
     let console_out = unsafe { GetStdHandle(STD_OUTPUT_HANDLE) };
 
     let mut state: DWORD = 0;
-    assert_ne!(unsafe { GetConsoleMode(console_out, &mut state) }, 0);
-    state |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-    state &= !DISABLE_NEWLINE_AUTO_RETURN;
-    assert_ne!(unsafe { SetConsoleMode(console_out, state) }, 0);
+    let mut ret: Result<(), _> = Ok(());
+    unsafe {
+        let mut e: DWORD = 0;
+        if GetConsoleMode(console_out, &mut state) == 0 {
+            ret = Err(());
+        }
+        if ret.is_ok() {
+            state |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+            state &= !DISABLE_NEWLINE_AUTO_RETURN;
+            if SetConsoleMode(console_out, state) == 0 {
+                ret = Err(());
+            }
+        }
+    }
+    return ret;
 }
+
+#[cfg(windows)]
+pub fn init() {
+    assert_eq!(try_init().is_ok(), true);
+}
+
+#[cfg(not(windows))]
+pub fn try_init() -> Result<(), ()> {
+    Ok(())
+}
+
 #[cfg(not(windows))]
 pub fn init() {
     ;
