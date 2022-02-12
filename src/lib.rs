@@ -22,8 +22,21 @@
 //! CMD’s support for ANSI’s escaped characters on your Windows builds! And
 //! you can leave this line in your Unix builds too, it will simply do nothing.
 
+use std::fmt;
+
+#[derive(Debug)]
+pub struct InitError;
+
+impl fmt::Display for InitError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "output-vt100-rs: Could not initialize")
+    }
+}
+
+impl std::error::Error for InitError {}
+
 #[cfg(windows)]
-pub fn try_init() -> Result<(), ()> {
+pub fn try_init() -> Result<(), InitError> {
     use winapi::shared::minwindef::DWORD;
     use winapi::um::consoleapi::{GetConsoleMode, SetConsoleMode};
     use winapi::um::processenv::GetStdHandle;
@@ -36,13 +49,13 @@ pub fn try_init() -> Result<(), ()> {
     let mut ret: Result<(), _> = Ok(());
     unsafe {
         if GetConsoleMode(console_out, &mut state) == 0 {
-            ret = Err(());
+            ret = Err(InitError);
         }
         if ret.is_ok() {
             state |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
             state &= !DISABLE_NEWLINE_AUTO_RETURN;
             if SetConsoleMode(console_out, state) == 0 {
-                ret = Err(());
+                ret = Err(InitError);
             }
         }
     }
@@ -55,14 +68,12 @@ pub fn init() {
 }
 
 #[cfg(not(windows))]
-pub fn try_init() -> Result<(), ()> {
+pub fn try_init() -> Result<(), InitError> {
     Ok(())
 }
 
 #[cfg(not(windows))]
-pub fn init() {
-    ;
-}
+pub fn init() {}
 
 #[cfg(test)]
 mod tests {
