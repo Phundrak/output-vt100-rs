@@ -1,0 +1,22 @@
+kind: pipeline
+type: docker
+name: rust-stable
+
+steps:
+  - name: stable
+    image: rust:latest
+    commands:
+      - cargo build --verbose
+      - cargo test
+
+---
+kind: pipeline
+type: docker
+name: rust-nightly
+
+steps:
+  - name: nightly
+    image: rustlang/rust:nightly
+    commands:
+      - cargo build --verbose
+      - cargo test
